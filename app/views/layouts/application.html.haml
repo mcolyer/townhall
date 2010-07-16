@@ -2,7 +2,10 @@
 %html
   %head
     %title Townhall
-    = stylesheet_link_tag :all
+    = stylesheet_link_tag 'screen.scss', :media => 'screen, projection'
+    = stylesheet_link_tag 'print.scss', :media => 'print'
+    /[if IE]
+      = stylesheet_link_tag 'ie.scss', :media => 'screen, projection'
     = javascript_include_tag :defaults
     = csrf_meta_tag
   %body
