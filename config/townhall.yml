@@ -1,0 +1,14 @@
+production: &production
+  s3_bucket: townhall-country-state-majorlocale-locale
+  s3_access_key: key
+  s3_secret_key: secret
+  base_url: http://locale.majorlocale.state.townhall.us
+
+development:
+  <<: *production
+
+test:
+  s3_bucket: townhall-country-state-majorlocale-locale
+  s3_access_key: key
+  s3_secret_key: secret
+  base_url: http://locale.majorlocale.state.townhall.us
