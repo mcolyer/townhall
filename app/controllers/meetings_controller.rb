@@ -1,18 +1,18 @@
 class MeetingsController < ApplicationController
-  respond_to :html, :except => [:create]
-  respond_to :json, :only => [:create]
+  respond_to :html, :only => [:index, :show]
+  respond_to :json, :only => [:create, :show]
+  skip_before_filter :verify_authenticity_token
 
   def index
     @meetings = Meeting.all
   end
 
   def create
-    @meeting = Meeting.new(params[:meeting])
+    @meeting = Meeting.create(params[:meeting])
+    respond_with(@meeting, :location => @meeting)
+  end
 
-    if @meeting.save
-      redirect_to @meeting
-    else
-      render :json => @meeting.errors, :status => :unprocessable_entity
-    end
+  def show
+    respond_with(@meeting = Meeting.find(params[:id]))
   end
 end

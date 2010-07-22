@@ -25,4 +25,13 @@ describe Meeting do
       should_not be_valid
     end
   end
+  describe "url generation" do
+    subject do
+      Meeting.new
+    end
+    it "generates a proper url" do
+      subject.meeting_date = "2010-07-15"
+      subject.url.should match(/http:\/\/s3\.amazonaws\.com\/#{TownhallConfig.s3_bucket}\/meetings\/2010-07-15\/(.*?)\.webm/)
+    end
+  end
 end
