@@ -27,7 +27,7 @@ class Meeting < ActiveRecord::Base
 
   def self.upload(url, filename)
     s3_key = "/"+URI.parse(url).path.split('/', 3)[2]
-    AWS::S3::S3Object.store(s3_key, open(filename), TownhallConfig.s3_bucket)
+    AWS::S3::S3Object.store(s3_key, open(filename), TownhallConfig.s3_bucket, :access => :public_read)
   end
 
   def meeting_date=(meeting_date)
