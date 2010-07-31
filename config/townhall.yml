@@ -1,4 +1,5 @@
 production: &production
+  name: Locale
   s3_bucket: townhall-country-state-majorlocale-locale
   s3_access_key: key
   s3_secret_key: secret
@@ -8,6 +9,7 @@ development:
   <<: *production
 
 test:
+  name: Locale
   s3_bucket: townhall-country-state-majorlocale-locale
   s3_access_key: key
   s3_secret_key: secret
