@@ -13,7 +13,7 @@ Getting Started
 
 Checkout the latest copy using git:
 
-    git clone git://github.com/townhall/townhall.git
+    git clone git://github.com/mcolyer/townhall.git
 
 Then create a branch:
 
