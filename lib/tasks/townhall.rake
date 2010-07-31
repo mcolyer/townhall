@@ -1,6 +1,5 @@
-namespace :townhall do
-  desc "Create a meeting from the following video"
-  task :import => :environment, [:url, :meeting_date] do |t, args|
+namespace :townhall do desc "Create a meeting from the following video"
+  task :import, :url, :meeting_date, :needs => :environment do |t, args|
     WORKING_DIRECTORY = File.join(Rails.root, "tmp", "transcode")
 
     puts "Creating working directory #{WORKING_DIRECTORY}"
