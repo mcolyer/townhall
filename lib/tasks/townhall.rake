@@ -10,6 +10,8 @@ namespace :townhall do desc "Create a meeting from the following video"
     start_time = Time.now.to_i
     unless File.exists? VIDEO_FILE
       Meeting.fetch(args.url, VIDEO_FILE)
+    else
+      puts "Using cached file 'meeting' in #{WORKING_DIRECTORY}"
     end
     stop_time = Time.now.to_i
     puts "Download Complete [#{stop_time - start_time}s]"
@@ -19,6 +21,8 @@ namespace :townhall do desc "Create a meeting from the following video"
     start_time = Time.now.to_i
     unless File.exists? WEBM_VIDEO_FILE
       Meeting.transcode(VIDEO_FILE, WEBM_VIDEO_FILE)
+    else
+      puts "Using cached file 'meeting.webm' in #{WORKING_DIRECTORY}"
     end
     stop_time = Time.now.to_i
     puts "Transcoding Complete [#{stop_time - start_time}s]"
