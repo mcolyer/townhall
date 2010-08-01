@@ -36,6 +36,6 @@ namespace :townhall do desc "Create a meeting from the following video"
     stop_time = Time.now.to_i
     puts "Upload complete [#{stop_time - start_time}s]"
 
-    #FileUtils.rm_r(WORKING_DIRECTORY)
+    FileUtils.rm_r(WORKING_DIRECTORY)
   end
 end
