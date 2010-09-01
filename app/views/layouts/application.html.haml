@@ -13,12 +13,21 @@
     #page
       %header
         %h1= TownhallConfig.name
+        #login
+          - if current_user
+            = current_user.name
+          - else
+            = link_to "Login", user_oauth_authorize_url(:facebook)
       %hr
       %navigation
         %ul
           %li
             = link_to "Meetings", meetings_url
       #content
+        %p.notice
+          = notice
+        %p.alert
+          = alert
         = yield
       %footer
         A digital <a href="http://github.com/mcolyer/townhall/">Townhall</a> made for and by the citizens.

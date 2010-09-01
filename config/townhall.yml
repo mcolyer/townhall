@@ -4,9 +4,12 @@ production: &production
   s3_access_key: key
   s3_secret_key: secret
   base_url: http://locale.majorlocale.state.townhall.us
+  facebook_app_id: 1
+  facebook_app_secret: abc
 
 development:
   <<: *production
+  base_url: http://localhost:3000
 
 test:
   name: Locale
@@ -14,3 +17,5 @@ test:
   s3_access_key: key
   s3_secret_key: secret
   base_url: http://locale.majorlocale.state.townhall.us
+  facebook_app_id: 1
+  facebook_app_secret: abc

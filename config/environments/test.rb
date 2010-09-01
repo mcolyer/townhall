@@ -29,4 +29,10 @@ Townhall::Application.configure do
   # This is necessary if your schema can't be completely dumped by the schema dumper,
   # like if you have constraints or database-specific column types
   # config.active_record.schema_format = :sql
+
+  # Set the default url in the mailer
+  config.action_mailer.default_url_options = { :host => URI(TownhallConfig.base_url).host }
+
+  # Report deprecation notices
+  config.active_support.deprecation = :stderr
 end

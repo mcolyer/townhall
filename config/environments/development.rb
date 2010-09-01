@@ -16,4 +16,10 @@ Townhall::Application.configure do
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
+
+  # Report deprecation notices
+  config.active_support.deprecation = :log
+
+  # Set the default url in the mailer
+  config.action_mailer.default_url_options = { :host => URI(TownhallConfig.base_url).host }
 end

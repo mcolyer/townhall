@@ -1,12 +1,14 @@
 source "http://rubygems.org"
 
-gem "rails", "3.0.0.beta4"
+gem "rails", "3.0.0.rc"
 
 gem "haml", "~> 3.0.13"
 gem "compass", "~> 0.10.2"
 gem "compass-susy-plugin", "~> 0.7.0"
 gem "aws-s3", "~> 0.6.2", :require => "aws/s3"
 gem "httparty", "~> 0.6.1"
+gem "devise", :git => "git://github.com/plataformatec/devise.git"
+gem "oauth2", "~> 0.0.10"
 
 gem "capybara", ">= 0.3.8", :group => [:test, :cucumber]
 gem "cucumber-rails", ">= 0.3.2", :group => [:test, :cucumber]
