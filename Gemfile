@@ -2,9 +2,9 @@ source "http://rubygems.org"
 
 gem "rails"
 
-gem "haml", "~> 3.0.18"
-gem "compass", "~> 0.10.5"
-gem "compass-susy-plugin", "~> 0.8.0"
+gem "haml"
+gem "compass"
+gem "compass-susy-plugin"
 gem "aws-s3", "~> 0.6.2", :require => "aws/s3"
 gem "httparty", "~> 0.6.1"
 gem "devise", :git => "git://github.com/plataformatec/devise.git"
