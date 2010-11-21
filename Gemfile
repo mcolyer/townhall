@@ -7,8 +7,8 @@ gem "compass"
 gem "compass-susy-plugin"
 gem "aws-s3", :require => "aws/s3"
 gem "httparty"
-gem "devise", :git => "git://github.com/plataformatec/devise.git"
-gem "oauth2", "~> 0.0.13"
+gem "devise", :git => "git://github.com/plataformatec/devise.git", :branch => "v1.2.oauth"
+gem "oauth2"
 
 gem "capybara", ">= 0.3.9", :group => [:test, :cucumber]
 gem "cucumber-rails", ">= 0.3.2", :group => [:test, :cucumber]
