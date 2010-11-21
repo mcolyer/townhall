@@ -45,7 +45,7 @@ module Townhall
     # end
 
     # Use jquery instead of Prototype
-    config.action_view.javascript_expansions[:defaults] = %w(jquery.js jquery-ui.js rails.js)
+    config.action_view.javascript_expansions[:defaults] = %w(jquery.js jquery-ui.js rails.js underscore.js json2.js backbone.js)
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
