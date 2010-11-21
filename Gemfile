@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-gem "rails", "3.0.0"
+gem "rails"
 
 gem "haml", "~> 3.0.18"
 gem "compass", "~> 0.10.5"
