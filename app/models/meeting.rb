@@ -22,6 +22,8 @@ class Meeting < ActiveRecord::Base
   def self.remote_create(meeting_date)
     data = { :meeting => { :meeting_date => meeting_date } }
     new_meeting_url = TownhallConfig.base_url + "/meetings/"
+    require 'ruby-debug'
+    debugger
     HTTParty.post(new_meeting_url, :body => data, :headers => {"Accept" => "application/json"})["meeting"]
   end
 

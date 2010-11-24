@@ -31,6 +31,9 @@ describe Meeting do
     end
     it "generates a proper url" do
       subject.meeting_date = "2010-07-15"
+      subject.meeting_date.year.should == 2010
+      subject.meeting_date.month.should == 7
+      subject.meeting_date.day.should == 15
       subject.url.should match(/http:\/\/s3\.amazonaws\.com\/#{TownhallConfig.s3_bucket}\/meetings\/2010-07-15\/(.*?)\.webm/)
     end
   end
