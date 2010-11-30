@@ -4,7 +4,7 @@ class MeetingsController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   def index
-    @meetings = Meeting.all
+    @meetings = Meeting.order("meeting_date ASC").all
   end
 
   def create
