@@ -12,6 +12,7 @@ gem "oauth2"
 
 gem "capybara", :group => [:test, :cucumber]
 gem "cucumber-rails", :group => [:test, :cucumber]
+gem "fixture_builder", :group => [:test, :cucumber]
 gem "database_cleaner", :group => [:test, :cucumber]
 gem "factory_girl_rails", :group => [:test, :cucumber]
 gem "launchy", :group => [:test, :cucumber]

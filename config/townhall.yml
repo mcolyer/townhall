@@ -6,6 +6,7 @@ production: &production
   base_url: http://locale.majorlocale.state.townhall.us
   facebook_app_id: 1
   facebook_app_secret: abc
+  system_user_token: thisshouldbeunique
 
 development:
   <<: *production
@@ -19,3 +20,4 @@ test:
   base_url: http://locale.majorlocale.state.townhall.us
   facebook_app_id: 1
   facebook_app_secret: abc
+  system_user_token: thisshouldbeunique

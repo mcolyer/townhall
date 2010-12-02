@@ -20,7 +20,7 @@ class Meeting < ActiveRecord::Base
   end
 
   def self.remote_create(meeting_date)
-    data = { :meeting => { :meeting_date => meeting_date } }
+    data = { :meeting => { :meeting_date => meeting_date }, :auth_token => TownhallConfig.system_user_token }
     new_meeting_url = TownhallConfig.base_url + "/meetings/"
     HTTParty.post(new_meeting_url, :body => data, :headers => {"Accept" => "application/json"})["meeting"]
   end

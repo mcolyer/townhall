@@ -2,5 +2,5 @@
 
 Factory.define :user do |f|
   f.name "John Doe"
-  f.email "john@example.com"
+  f.sequence(:email) {|n| "person#{n}@example.com" }
 end
