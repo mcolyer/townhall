@@ -1,0 +1,464 @@
+	
+	
+		
+			        
+	
+	
+
+																					
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>City Council Meeting</title>
+
+<base href="http://admin-101.granicus.com/content/menlo_park/" />
+
+<script src="http://admin-101.granicus.com/content/design/jquery/jquery-1.2.1.js" type="text/javascript"></script>
+<script src="http://admin-101.granicus.com/content/design/jquery/jquery.idTabs.min.js" type="text/javascript"></script>
+	
+
+
+<style type="text/css">
+body{
+	margin:0;
+	background:#FFFFFF url(images/background_2.png) repeat-y left;
+	font-family:"Trebuchet MS", Verdana, Helvetica, sans-serif; font-size:10pt;}
+img {border:0; margin:0; padding:0;}
+	
+#playerColumn{
+	position:absolute; top:0; left:0;
+	width:350px;
+	background:url(images/background_1.png) no-repeat top left;}
+#playerArea{
+	background-color:#000;
+	position:absolute; top:0px; left:15px;
+	width:320px;}
+#titleDiv{
+	clear:both;
+	left:15px;
+	background-color:#496920;
+	width:320px;}
+#title {
+	font-weight:normal; font-size:12pt; 
+	color:#ffffff;
+	margin:0px; padding:5px;
+	overflow:auto;}
+.clear {
+	height:1px;
+	margin:0px; padding:0px;
+	overflow:hidden;
+	clear:both;}
+
+/* Clip Info area styles */
+#clipInfo {
+	width:320px;
+	float:left;
+	background:#ffffff url(images/tabs_bgRepeat.png) repeat-x top;}
+
+/*  Tabs  */
+#idTabs {
+	height:20px; width:320px;
+	margin:0; padding:0;
+	overflow:hidden;
+	background:#666666 url(images/tabs_bgRepeat.png) repeat-x top;}
+#idTabs li {
+	display:inline;
+	list-style-image:none;
+	padding:0px; margin:0px;}
+#idTabs li a {
+	padding:0px; margin:0px;
+	text-decoration:none;
+	color:#FFFFFF;}
+#noTabItem {
+	padding-top:20px;}
+
+/* All Items div */
+#all_Items {
+	width:320px;
+	overflow: auto; overflow-x:hidden;
+	float:left; display:block;}
+.item {
+	border-bottom:#DBDBDB solid 1px;
+	background:url(images/bullet.png) no-repeat top left;
+	margin:0px;}
+.itemHover {
+	border-bottom:#DBDBDB solid 1px;
+	background:#f2f2f2 url(images/bullet.png) no-repeat top left;
+	margin:0px;}
+a.itemLink {
+	padding:3px 3px 3px 15px; margin:0px;
+	display:block;
+	line-height:120%; color:#2F2F2F;}
+	
+/* Current Item div */
+#currentItem {
+	width:320px;
+	overflow: auto; overflow-x:hidden;
+	float:left;}
+.currentItemInfo {
+	line-height:120%;
+	margin:5px;}
+#agendaLinkDiv{
+	height:23px;
+	background:url(http://admin-101.granicus.com/content/design/expressTemplate_resources/gChrome/agendaIcon.png) no-repeat top left;
+	padding: 3px 0px 0px 18px;}
+#RelatedDocumentsStream {margin-bottom:3px;}
+#gToolbar {
+	height:20px; width:320px;
+	margin:0px; padding:0px;
+	background:url(http://admin-101.granicus.com/content/design/expressTemplate_resources/gChrome/gToolBar_bgRepeat.png) repeat-x;
+	overflow:visible;
+	clear:both;
+	position:relative;
+	top:1px;
+	}
+#playerCol_footer {
+	position:absolute;
+	bottom:0px; left:0px;
+	overflow:hidden;
+	width:350px; height:15px;
+	background:url(images/playerCol_footer.png) no-repeat top left;}
+#docArea {
+	position:absolute;
+	top:0px;
+	left:350px;}
+
+/* hyperlink styling */
+a:link {text-decoration:none; font-size:9pt;}
+a:hover{text-decoration:none; cursor:pointer;}
+a:active{text-decoration:underline;}
+a:visited{text-decoration:none;}
+</style>
+
+<!--[if IE]>
+	<style type="text/css" media="screen">#title{font-weight:bold;}
+		span#RelatedDocuments{
+		background:url(http://admin-101.granicus.com/content/design/expressTemplate_resources/gChrome/attchIcon.png) no-repeat top left;
+		padding-left:23px;
+		}
+	</style>
+<![endif]-->
+
+
+
+
+
+
+<script>
+
+// Set CC and Share boxes to 'closed' 
+cc_height = 0
+shareBox_height = 0
+
+// Fix IE6 background img flicker
+try {
+  document.execCommand("BackgroundImageCache", false, true);
+} catch(err) {}
+
+$(document).ready(function(){
+
+// trigger element sizing on load/resize
+	sizer();
+	
+	$(window).load(function() {
+		sizer()
+	});
+	$(window).resize(function() {
+		sizer()
+	});
+
+// set playerColumn position in relation to the logo div height
+	$("div#playerColumn").css("top", $("img#logo").height());
+
+// list item hover effect
+	$("div.item").hover(
+	  function () {
+		$(this).toggleClass("itemHover");
+	  }, 
+	  function () {
+		$(this).toggleClass("itemHover");
+	});
+
+});
+
+// Image swapper
+function imageSwap2() {
+	$("img#currentItem_img").attr("src","images/currentItem_selected.png");
+	$("img#all_Items_img").attr("src","images/allItems.png");
+}
+
+function imageSwap1() {	
+	$("img#all_Items_img").attr("src","images/allItems_selected.png");
+	$("img#currentItem_img").attr("src","images/currentItem.png");
+}
+
+// Closed Captioning display controls
+function ccOpen() {
+	if (cc_height == 0) {
+		cc_height = 60
+		$("div#cc_bar").show()
+		$("img#captionControl").attr("src","http://admin-101.granicus.com/content/design/expressTemplate_resources/gChrome/cc_selected.png");
+		sizer()
+	} else {
+		cc_height = 0
+		$("div#cc_bar").hide()
+		$("img#captionControl").attr("src","http://admin-101.granicus.com/content/design/expressTemplate_resources/gChrome/cc.png");
+		sizer()
+	}
+}
+	
+function ccClose() {
+	cc_height = 0
+	$("div#cc_bar").hide()
+	$("img#captionControl").attr("src","http://admin-101.granicus.com/content/design/expressTemplate_resources/gChrome/cc.png");
+	sizer()
+}
+
+// calculte and assign sizes to elements, see window resize trigger above
+function sizer(){
+	$("#playerColumn").css("height", $(window).height() - $("#logoDiv").height() - $("#playerCol_footer").height());
+		$("#clipInfo").css("height", $(window).height() - $("#logoDiv").height() - $("#playerDiv").height() - $("#titleDiv").height() - 20 - $("#playerCol_footer").height() - cc_height - shareBox_height);// 20 is the gToolbar height  $("#gToolbar").height()
+			$("#currentItem").css("height", $(window).height() - $("#logoDiv").height() - $("#playerDiv").height() - $("#titleDiv").height() - $("#idTabs").height() - 20 - $("#playerCol_footer").height() - cc_height - shareBox_height);
+			  $("#all_Items").css("height", $(window).height() - $("#logoDiv").height() - $("#playerDiv").height() - $("#titleDiv").height() - $("#idTabs").height() - 20 - $("#playerCol_footer").height() - cc_height - shareBox_height);
+	$("#docArea").css("height", $(window).height());
+	$("#docArea").css("width", $(window).width() - 350);
+};
+</script>
+
+
+</head>
+<body onLoad="window.focus()">
+<div id="logoDiv"><img id="logo" src="images/logo.png"></div>
+<div id="playerColumn">
+	<div id="playerArea">
+		<div id="playerDiv"><iframe id="DataStreamController" height=0 width=0 style="height: 0px; width: 0px; ">
+</iframe><script type="text/javascript" src="http://menlopark.granicus.com/js/MicrosoftAjax.js"></script>
+<script type="text/javascript" src="http://menlopark.granicus.com/js/Silverlight.js"></script>
+<script type="text/javascript" src="http://menlopark.granicus.com/js/PluginWMPDetect.js"></script>
+<script type="text/javascript" src="http://menlopark.granicus.com/js/GranicusPlayer.js"></script>
+<div id="MediaPlayerContainer">
+<script type="text/javascript">
+var MediaPlayer;
+	MediaPlayer = new GranicusPlayer("MediaPlayerContainer",
+	"granicus_classicDark","320","240",0,0,true,
+	"http://menlopark.granicus.com/ASX.php?view_id=2&clip_id=651&r=2d6a9af40f63127d1ac54f8ce68e73ee&xp=n&intro=1&sn=menlopark.granicus.com&SESS1=82dc26d1ad85150b35997d200298553f",
+	"http://menlopark.granicus.com/JSON.php?view_id=2&clip_id=651&intro=1&r=2d6a9af40f63127d1ac54f8ce68e73ee",
+	false,"menlopark.granicus.com","menlopark.granicus.com","",
+	"", false, " { aspectRatio: 'true', autoStart: 'true', width: '320', height: '240', highDefinition: 'false', closedCaptions: 'false', enableEmbedding: 'true', showThumbnail: 'false', thumbnailGuid: '', templateVersion: 'legacy', templateGuid: 'f6d29045-9b90-1028-9ce6-49b7bb825a3d', eventStartTime: '0001-01-01 12:00:00 AM' }", 
+	"0", "", "", "false");
+	</script>
+</div> 
+<script type='text/javascript'>
+function Play() {
+	MediaPlayer.Play();
+}
+function Pause() {
+	MediaPlayer.Pause();
+}
+function Stop() {
+	MediaPlayer.Stop();
+}
+function FastForward() {
+	MediaPlayer.FastForward();
+}
+function Rewind() {
+	MediaPlayer.Rewind();
+}
+function GetPlayerPosition() {
+	return MediaPlayer.GetPlayerPosition();
+}
+function SetPlayerPosition(pos,selectbox) { 
+	MediaPlayer.SetPlayerPosition(pos);
+	if(selectbox != null) {
+		selectbox.selectedIndex = 0; 
+	}
+}
+</script>
+</div>
+				<div id="titleDiv">
+			<div id="title">City Council Meeting</div>
+		</div>
+		<div id="clipInfo">
+        	            	<div id="jumpTo">
+                	<form style="display: inline;"><select id="IndexDropdown" style="width:320px; height:23px; margin:0; padding:0;" onChange="SetPlayerPosition(this.options[this.selectedIndex].value,this)"><option value="-1">Jump To...</option><option value="0:267">ROLL CALL</option>
+<option value="0:268">PLEDGE OF ALLEGIANCE</option>
+<option value="0:269">A. COMMISSION/COMMITTEE VACANCIES, APPOINTMENTS AND REPORTS </option>
+<option value="0:271">B.	PRESENTATIONS AND PROCLAMATIONS - None</option>
+<option value="0:368">C.	PUBLIC COMMENT #1 </option>
+<option value="0:373">Barbara Hunter called to speak.</option>
+<option value="0:585">Kristi Breisch called to speak.</option>
+<option value="0:620">D.	CONSENT CALENDAR</option>
+<option value="0:665">E.	PUBLIC HEARINGS</option>
+<option value="0:666">1. Introduction of an Ordinance adopting the 2010 California Building Standards Code Parts 1, 2, 2.5, 3, 4, 5, 6, 8, 10, 11, and 12 and local amendments to parts 2 and 2.5 and authorization by City Council for the City Manager to execute a Memorandum of Un</option>
+<option value="0:676">Staff Presentation</option>
+<option value="0:1702">The Public Hearing was opened</option>
+<option value="0:2162">Susan Eschweiler called to speak.</option>
+<option value="0:2490">The Public Hearing was closed</option>
+<option value="0:3118">Action by Council</option>
+<option value="0:3751">2. Initiation of the Work Program for the Willow Business Area and M-2 zoning district area by adopting a Resolution amending the City's Master Fee Schedule to incorporate proposed changes in Community Development Department fees to become effective Januar</option>
+<option value="0:3768">Staff presentation </option>
+<option value="0:4192">PH opened</option>
+<option value="0:4198">Sara Buss called to speak.</option>
+<option value="0:4266">Susan Eschweiler called to speak.</option>
+<option value="0:4301">John Tarlton called to speak.</option>
+<option value="0:4305">The Public Hearing was closed</option>
+<option value="0:4512">Council Action</option>
+<option value="0:4607">3. Adoption of a Resolution amending the City's Master Fee Schedule to incorporate a $3.00 increase in parking citations effective December 7, 2010 in response to passage of State of California Senate Bill 857 which increases the total payment from the Cit</option>
+<option value="0:4609">Staff presentation</option>
+<option value="0:4779">F.	REGULAR BUSINESS</option>
+<option value="0:4804">1. Potential increases to garbage and recycling rates for 2011 (Staff report # 10-161)</option>
+<option value="0:5089">Peter Colby</option>
+<option value="0:9831">Council Action</option>
+<option value="0:10448">2. Consideration of state and federal legislative items, including decisions to support or oppose any such legislation, and items listed under Written Communication or Information Item - None</option>
+<option value="0:10450">G. CITY MANAGER'S REPORT - None</option>
+<option value="0:10451">H. WRITTEN COMMUNICATION - None</option>
+<option value="0:10452">I. INFORMATIONAL ITEMS</option>
+<option value="0:10453">1. One-year review of Zoning Ordinance Amendment relative to the clarification of the gross floor area definition (Staff report #10-137)</option>
+<option value="0:10491">Morris Brown called to speak.</option>
+<option value="0:10777">K. PUBLIC COMMENT #2 </option>
+<option value="0:10807">J. COUNCILMEMBER REPORTS</option>
+<option value="0:10980">1. Report from the City Council Subcommittee on High Speed Rail</option>
+<option value="0:11855">Morris Brown called to speak.</option>
+<option value="0:12238">L. ADJOURNMENT</option>
+</select>
+</form>
+
+                    <div id="currentItem" style="margin-bottom:-23px;">
+                                                <div class="currentItemInfo" id="IndexNameStream"><span id="IndexName"></span>
+</div>
+                        <div class="currentItemInfo" id="RelatedDocumentsStream"><span id="RelatedDocuments"></span>
+</div>
+                    </div> 
+                </div>
+           			</div>
+		<div id="gToolbar">
+			<a onClick="window.open('http://www.granicus.com/streamingMediaHelp/index.htm','helpviewer','toolbar=no,directories=no,status=no,resizable=yes,menubar=no,width=680,height=700,scrollbars=yes'); return false;" href="javascript:void(0);" class="" style=""><img src='http://admin-101.granicus.com/content/design/expressTemplate_resources/gChrome/helpLink.png' height='20' width='41' alt='Help' /></a><img id="shareLink_img" src="http://admin-101.granicus.com/content/design/expressTemplate_resources/gChrome/shareLink.png" width="46" height="20" alt="Get a link to share"/><div id="share_container">
+	<script type="text/javascript">
+		// Share options container control
+		$(document).ready(function(){
+			$("img#shareLink_img").click(function(){ 
+				if (shareBox_height == 0) {
+					shareBox_height = 100
+					$("div#share_container").show()
+					$(this).attr("src","http://admin-101.granicus.com/content/design/expressTemplate_resources/gChrome/shareLink_selected.png");
+					sizer()
+				} else {
+					shareBox_height = 0
+					$("div#share_container").hide()
+					$(this).attr("src","http://admin-101.granicus.com/content/design/expressTemplate_resources/gChrome/shareLink.png");
+					sizer()
+				}
+			});		
+		});
+		
+		function shareClose() {
+			shareBox_height = 0;
+			$("div#share_container").hide();
+			$("img#shareLink_img").attr("src","http://admin-101.granicus.com/content/design/expressTemplate_resources/gChrome/shareLink.png");
+			sizer();
+		};
+	</script>
+	<style type="text/css">
+		/* Share container styles */
+		#shareLink_img{cursor:pointer;}
+		#share_container{
+			display:none;
+			width:320px; height:100px;
+			background-color:#333333;
+			margin:0px; padding:0px;
+			overflow:hidden;}
+		#share_content{
+			width:280px;
+			overflow:hidden;
+			text-align:left;
+			margin-left:5px; padding:0px;
+			font-size:8pt; color:#FFFFFF;}
+		#shareClose_div{
+			float:right;
+			cursor:pointer;}
+		#share_content p{
+			margin:5px 0px 2px 0px; padding:0;}
+		#shareURL{
+			width:250px;
+			font-size:9pt;
+			margin:0; padding:0;}
+		#addThis{margin:1px 0px 1px 0px;}
+	</style>
+     
+    <div id="shareClose_div"><img src="http://admin-101.granicus.com/content/design/expressTemplate_resources/gChrome/close.png" height="20" width="20" alt="Close" onClick="javascript:shareClose();return true" /></div>
+	<div id="share_content"><p>Copy the address to this Media Player:</p>
+		<div id="shareURL_div">
+			<SCRIPT type="text/javascript">
+				  <!--
+				  document.write('<input id="shareURL" type="text" onfocus="javascript:this.select();" value="');
+				  document.write(location.href);
+				  document.write('"/>');
+				  // -->
+			</SCRIPT>
+		</div>
+		<p>Or bookmark and share:</p>
+		<!-- AddThis Button BEGIN -->
+		<a href="http://www.addthis.com/bookmark.php" onClick="addthis_url   = location.href; addthis_title = document.title; return addthis_click(this);" target="_blank"><img src="http://s9.addthis.com/button1-share.gif" id="addThis" width="125" height="16" border="0" alt="Bookmark and Share" /></a>
+		<script type="text/javascript">
+			var addthis_pub = 'granicus';
+			var addthis_options = 'favorites, facebook, twitter, linkedin, live, digg, delicious, more';
+		</script>
+		<script type="text/javascript" src="http://s9.addthis.com/js/widget.php?v=10"></script>
+		<!-- AddThis Button END -->
+	</div>
+	
+</div>		</div>
+	</div>
+</div>
+<div id="playerCol_footer">&nbsp;</div>
+<div id="docArea">
+	<div id="doc">
+                    <script type='text/javascript' src="http://menlopark.granicus.com/js/DocumentViewer.js"></script><table id="documentviewertable" style="width=100%; height=100%;" width="100%" height="100%" border=0 cellspacing=0 cellpadding=0><style type="text/css" media="screen">
+.DocTab {
+	color:#FFF;
+	position: relative;
+	top: 0px;
+	float: left;
+	padding: 3px 9px;
+	margin: 0px 0px 0px 0px;
+	font: bold 0.7em sans-serif;
+	list-style: none;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	cursor: pointer;
+}
+.TabbedPanelsTabGroup {
+	margin: 0px;
+	padding: 0px;
+}
+</style>
+<tr height="21" background="http://menlopark.granicus.com/images/docview_background.png" height=21 align=center valign=middle>
+	<td style="background-image:url(http://menlopark.granicus.com/images/dv/bg.gif); background-position:center; background-repeat:repeat-x;" height="21" valign="middle">
+	<ul class="TabbedPanelsTabGroup">
+	<!-- Commected By Naveed for Facebook: 2009-08-03-->
+	<!--li class="DocTab" tabindex="0" id="DocTab" onClick="dv_selectTab('doctabarea')">Document</li-->
+	<a  style="padding:0px; margin:0px;" onClick="DocumentViewer.focus();dv_selectTab('doctabarea');return false;" onMouseOut="dv_swapImgRestore()" onMouseOver="dv_swapImage('Document','','http://menlopark.granicus.com/images/dv/document_selected.png',1)" onMouseDown="dv_swapImage('Document','','http://menlopark.granicus.com/images/dv/document_selected.png',1)" onMouseUp="dv_swapImage('Document','','http://menlopark.granicus.com/images/dv/document_selected.png',1)">
+	<img src="http://menlopark.granicus.com/images/dv/document_default.png" alt="Document" name="Document" width="81" height="21" border="0" valign="middle" align="left" style="margin:0 13 0 0;">
+	</a>
+		
+	</ul>
+
+<a href="#" style="padding:0px; margin:0px;" onClick="DocumentViewer.focus(); window.print();return false;" onMouseOut="dv_swapImgRestore()" onMouseOver="dv_swapImage('Print','','http://menlopark.granicus.com/images/dv/print_over.gif',1)" onMouseDown="dv_swapImage('Print','','http://menlopark.granicus.com/images/dv/print_on.gif',1)" onMouseUp="dv_swapImage('Print','','http://menlopark.granicus.com/images/dv/print_over.gif',1)">
+<img src="http://menlopark.granicus.com/images/dv/print.gif" alt="Print" name="Print" width="11" height="21" border="0" valign="middle" align="right" style="margin:0 13 0 0;">
+</a>
+<a href="#" style="padding:0px; margin:0px;" onClick="DocumentViewer.location.href = 'http://menlopark.granicus.com/AgendaViewer.php?view_id=2&clip_id=651&event_id=&publish_id=&is_archiving=0&suppressToolbar=1&camera_id=&embedded=1';return false;" onMouseOut="dv_swapImgRestore()" onMouseOver="dv_swapImage('Home','','http://menlopark.granicus.com/images/dv/home_over.gif',1)" onMouseDown="dv_swapImage('Home','','http://menlopark.granicus.com/images/dv/home_on.gif',1)" onMouseUp="dv_swapImage('Home','','http://menlopark.granicus.com/images/dv/home_over.gif',1)">
+<img src="http://menlopark.granicus.com/images/dv/home.gif" alt="Home" name="Home" width="12" height="21" border="0" valign="middle" align="right" style="margin:0 10 0 5;">
+</a>
+<a href="#" style="padding:0px; margin:0px;" onClick="history.go(1);return false;" onMouseOut="dv_swapImgRestore()" onMouseOver="dv_swapImage('Forward','','http://menlopark.granicus.com/images/dv/forward_over.gif',1)" onMouseDown="dv_swapImage('Forward','','http://menlopark.granicus.com/images/dv/forward_on.gif',1)" onMouseUp="dv_swapImage('Forward','','http://menlopark.granicus.com/images/dv/forward_over.gif',1)">
+<img src="http://menlopark.granicus.com/images/dv/forward.gif" alt="Forward" name="Forward" width="8" height="21" border="0" valign="middle" align="right" style="margin:0 10 0 6;">
+</a>
+<a href="#" style="padding:0px; margin:0px;" onClick="history.go(-1);return false;" onMouseOut="dv_swapImgRestore()" onMouseOver="dv_swapImage('Back','','http://menlopark.granicus.com/images/dv/back_over.gif',1)" onMouseDown="dv_swapImage('Back','','http://menlopark.granicus.com/images/dv/back_on.gif',1)" onMouseUp="dv_swapImage('Back','','http://menlopark.granicus.com/images/dv/back_over.gif',1)">
+<img src="http://menlopark.granicus.com/images/dv/back.gif" alt="Back" name="Back" width="8" height="21" border="0" valign="middle" align="right" style="margin:0 10 0 13;">
+</a>
+	</td>
+</tr><tr style="height: 100%;"><td style="width: 100%; height: 100%" width="100%" height="100%"><div id="doctabarea" style="width: 100%; height: 100%;"><iframe name="DocumentViewer" scrolling="auto" marginheight="0" marginwidth="0" class="DocumentViewer" frameborder="0" id="DocumentViewer" src="http://menlopark.granicus.com/AgendaViewer.php?view_id=2&clip_id=651&event_id=&publish_id=&is_archiving=0&suppressToolbar=1&camera_id=&embedded=1" style="width: 100%; height: 100%;" width="100%" height="100%"></iframe></div></td></tr></table>
+
+            </div>
+</div>
+</body>
+</html>

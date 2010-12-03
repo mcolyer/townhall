@@ -1,5 +1,6 @@
 --- 
 db/schema.rb: 182c02c78ac954d5d4caecc65e9d2902
 spec/factories/meetings.rb: f0b298dc8150660d27c27538229ae442
+spec/factories/tags.rb: f393cc4000d16e71c34a599318eb1087
 spec/support/fixture_builder.rb: 32c28dbb2af0dc720d07d80e821103e8
 spec/factories/users.rb: c395bb0a4c3876cf05fb4fc3c46614be

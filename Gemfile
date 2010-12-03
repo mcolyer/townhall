@@ -9,6 +9,7 @@ gem "aws-s3", :require => "aws/s3"
 gem "httparty"
 gem "devise", :git => "git://github.com/plataformatec/devise.git", :branch => "v1.2.oauth"
 gem "oauth2"
+gem "nokogiri"
 
 gem "capybara", :group => [:test, :cucumber]
 gem "cucumber-rails", :group => [:test, :cucumber]

@@ -38,4 +38,15 @@ namespace :townhall do desc "Create a meeting from the following video"
 
     FileUtils.rm_r(WORKING_DIRECTORY)
   end
+
+  task :import_tags, :url, :meeting_id, :needs => :environment do |t, args|
+    puts "Downloading #{args.url}"
+    tags = Tag.fetch(args.url)
+
+    puts "Saving"
+    tags.each do |tag|
+      tag[:meeting_id] = args.meeting_id
+      Tag.remote_create(tag)
+    end
+  end
 end

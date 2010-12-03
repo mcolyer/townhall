@@ -185,6 +185,7 @@ DEPENDENCIES
   haml
   httparty
   launchy
+  nokogiri
   oauth2
   rails
   rspec-rails
